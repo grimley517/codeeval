@@ -1,4 +1,4 @@
-#! /usr/bin/env pyhthon3.4
+#! /usr/bin/env python3
 import unittest
 import dna as d
 import subprocess
