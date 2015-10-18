@@ -5,10 +5,10 @@ def matchLetter(letterA, letterB):
         return (True)
     else:
         return (False)
-        
+
 
 def score(startString, endString, scoreint =0, indel= False):
-    
+
     if(len(startString)==0 and len(endString) == 0):
         return (scoreint)
     elif (len(startString)==0 or len(endString) == 0):
@@ -86,11 +86,6 @@ if __name__ == "__main__":
         lines = file.read().split("\n")
         for line in lines:
             partA, partB = line.split("|")
-            try:
+            if (partA and partB):
                 number = score(partA, partB)
                 print(number)
-            except Exception as e:
-                print (line)
-                print (e)
-
-
