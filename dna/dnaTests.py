@@ -21,10 +21,10 @@ class TestSequenceFunctions(unittest.TestCase):
 
     def test4(self):
         self.assertEqual(d.score("GCATGCT","GATTACA"),(0-3))
-        
+
     def test5(self):
         self.assertEqual(d.score("",""),0)
-        
+
     def test6(self):
         self.assertEqual(d.score("G","GA"),(0-5))
 
