@@ -29,7 +29,7 @@ def score(startString, endString, scoreint=0, indel=False):
             scoreint -= indelscore(indel)
             indel=True
             remstring = remstring[1::]
-        return scoreint
+        return (scoreint)
     else:
         if matchLetter(startString[0], endString[0]):
             scoreint = score(
@@ -65,17 +65,13 @@ def score(startString, endString, scoreint=0, indel=False):
 
 
 if __name__ == "__main__":
-    with open(sys.argv[1], "rt") as file:
-        lines = file.read().split("\n")
-        print(lines)
-        for line in lines:
-            try:
-                partA, partB = line.split("|", maxsplit=1)
-                partA = clean(partA)
-                partB = clean(partB)
-                ans = score(
-                    startString=partA,
-                    endString=partB)
-                print(ans)
-            except:
-                pass
+    with open(sys.argv[1], "rt") as myfile:
+        lines = myfile.read()
+        try:
+            for line in lines:
+                parts = line.split("|")
+                partA = clean(parts[0])
+                partB = clean(parts[1])
+            print(score(startString=partA, endString=partB))
+        except:
+            print(lines)
