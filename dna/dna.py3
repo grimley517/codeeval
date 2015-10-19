@@ -10,6 +10,14 @@ def indelscore(indelstate):
     else:
         return 8
 
+def clean(instring):
+    allowed = "ACGT"
+    answer = ""
+    instring = instring.upper()
+    for letter in instring:
+        if letter in allowed:
+            answer += letter
+    return (answer)
 
 def score(startString, endString, scoreint=0, indel=False):
 
@@ -59,14 +67,15 @@ def score(startString, endString, scoreint=0, indel=False):
 if __name__ == "__main__":
     with open(sys.argv[1], "rt") as file:
         lines = file.read().split("\n")
+        print(lines)
         for line in lines:
-            line = line.strip()
             try:
-                partA, partB = line.split("|")
-                partA = partA.strip()
-                partB = partB.strip()
-                print(score(
+                partA, partB = line.split("|", maxsplit=1)
+                partA = clean(partA)
+                partB = clean(partB)
+                ans = score(
                     startString=partA,
-                    endString=partB))
+                    endString=partB)
+                print(ans)
             except:
                 pass

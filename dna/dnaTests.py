@@ -28,6 +28,12 @@ class TestSequenceFunctions(unittest.TestCase):
     def test6(self):
         self.assertEqual(d.score("G","GA"),(0-5))
 
+    def test7(self):
+        self.assertEqual(d.clean("G "), "G")
+        self.assertEqual(d.clean("g "), "G")
+        self.assertEqual(d.clean("G A"), "GA")
+        self.assertEqual(d.clean("GOA "), "GA")
+
 if __name__== "__main__":
     subprocess.call (["pep8", "dna.py"])
     unittest.main(verbosity=3, exit = False)
