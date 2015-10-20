@@ -3,6 +3,7 @@ import unittest
 import dna as d
 import subprocess
 import shutil
+import sys
 
 class TestSequenceFunctions(unittest.TestCase):
 
@@ -41,6 +42,7 @@ class TestSequenceFunctions(unittest.TestCase):
         strings = [string1, string2, string3]
         answers = []
         expanswers = [1,1,1]
+        sys.setrecursionlimit(400)
 
         for string in strings:
             parts = string.split("|")
@@ -50,6 +52,6 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertEqual(answers, expanswers)
 
 if __name__== "__main__":
-    subprocess.call (["pep8", "dna.py"])
+    #subprocess.call (["pep8", "dna.py"])
     unittest.main(verbosity=3, exit = False)
     shutil.copyfile("dna.py", "dna.py3")

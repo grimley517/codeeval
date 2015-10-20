@@ -19,6 +19,10 @@ def clean(instring):
             answer += letter
     return (answer)
 
+def shortern(sstring):
+    ans = sstring[1::]
+    return (ans)
+
 def score(startString, endString, scoreint=0, indel=False):
 
     if(len(startString) == 0 and len(endString) == 0):
@@ -28,19 +32,19 @@ def score(startString, endString, scoreint=0, indel=False):
         while len(remstring) > 0:
             scoreint -= indelscore(indel)
             indel=True
-            remstring = remstring[1::]
+            remstring = shortern(remstring)
         return (scoreint)
     else:
         if matchLetter(startString[0], endString[0]):
             scoreint = score(
-                    startString=startString[1::],
-                    endString=endString[1::],
+                    startString=shortern(startString),
+                    endString=shortern(endString),
                     scoreint=scoreint + 3,
                     indel=False)
         else:
             maxi = scoreint-10
             ans3 = score(
-                    startString=startString[1::],
+                    startString=shortern(startString),
                     endString=endString,
                     scoreint=scoreint - indelscore(indel),
                     indel=True)
@@ -48,14 +52,14 @@ def score(startString, endString, scoreint=0, indel=False):
                 maxi=ans3
             ans4 = score(
                     startString=startString,
-                    endString=endString[1::],
+                    endString=shortern(endString),
                     scoreint=scoreint - indelscore(indel),
                     indel=True)
             if ans4 and ans4>maxi:
                 maxi = ans4
             ans5 = score(
-                    startString=startString[1::],
-                    endString=endString[1::],
+                    startString=shortern(startString),
+                    endString=shortern(endString),
                     scoreint=scoreint - 3,
                     indel=False)
             if ans5 and ans5>maxi:
