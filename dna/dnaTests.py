@@ -3,6 +3,7 @@ import unittest
 import dna as d
 import subprocess
 import shutil
+import time
 
 class TestSequenceFunctions(unittest.TestCase):
 
@@ -46,10 +47,11 @@ class TestSequenceFunctions(unittest.TestCase):
             parts = string.split("|")
             partA = d.clean(parts[0])
             partB = d.clean(parts[1])
+            if len(partA)>partB.length
             answers.append(d.score(startString=partA, endString=partB))
         self.assertEqual(answers, expanswers)
 
 if __name__== "__main__":
-    subprocess.call (["pep8", "dna.py"])
+    #subprocess.call (["pep8", "dna.py"])
     unittest.main(verbosity=3, exit = False)
     shutil.copyfile("dna.py", "dna.py3")
