@@ -47,9 +47,17 @@ class TestSequenceFunctions(unittest.TestCase):
             parts = string.split("|")
             partA = d.clean(parts[0])
             partB = d.clean(parts[1])
-            if len(partA)>partB.length
-            answers.append(d.score(startString=partA, endString=partB))
-        self.assertEqual(answers, expanswers)
+            if len(partA)>len(partB):
+                partA, partB = partB, partA
+            for i in range(len(partA)):
+                pA = partA[:i]
+                pB = partB[:i]
+                start = time.time()
+                answer = d.score(pA, pB)
+                duration = time.time()-start
+                print("{0} | {1} | {2} | {3}| {4}".format(i,duration, answer, pA, pB,))
+                subprocess.call(["say", duration])
+
 
 if __name__== "__main__":
     #subprocess.call (["pep8", "dna.py"])
