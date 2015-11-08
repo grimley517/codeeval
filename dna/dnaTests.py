@@ -56,7 +56,6 @@ class TestSequenceFunctions(unittest.TestCase):
                 answer = d.score(pA, pB)
                 duration = time.time()-start
                 print("{0} | {1} | {2} | {3}| {4}".format(i,duration, answer, pA, pB,))
-                subprocess.call(["say", duration])
 
 
 if __name__== "__main__":
