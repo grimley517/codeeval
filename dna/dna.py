@@ -19,49 +19,22 @@ def clean(instring):
             answer += letter
     return (answer)
 
-def score(startString, endString, scoreint=0, indel=False):
-
-    if(len(startString) == 0 and len(endString) == 0):
-        return (scoreint)
-    elif (len(startString) == 0 or len(endString) == 0):
-        remstring = startString + endString
-        while len(remstring) > 0:
-            scoreint -= indelscore(indel)
-            indel=True
-            remstring = remstring[1::]
-        return (scoreint)
-    else:
-        if matchLetter(startString[0], endString[0]):
-            scoreint = score(
-                    startString=startString[1::],
-                    endString=endString[1::],
-                    scoreint=scoreint + 3,
-                    indel=False)
-        else:
-            maxi = scoreint-10
-            ans3 = score(
-                    startString=startString[1::],
-                    endString=endString,
-                    scoreint=scoreint - indelscore(indel),
-                    indel=True)
-            if ans3:
-                maxi=ans3
-            ans4 = score(
-                    startString=startString,
-                    endString=endString[1::],
-                    scoreint=scoreint - indelscore(indel),
-                    indel=True)
-            if ans4 and ans4>maxi:
-                maxi = ans4
-            ans5 = score(
-                    startString=startString[1::],
-                    endString=endString[1::],
-                    scoreint=scoreint - 3,
-                    indel=False)
-            if ans5 and ans5>maxi:
-                maxi = ans5
-            scoreint = maxi
-        return (scoreint)
+def score(startString, endString, indel=False):
+    oneago = []
+    thisrow = list(range(1, len(endString) + 1)) + [0]
+    for x in list(range(len(startString))):
+        twoago, oneago, thisrow = oneago, thisrow, [0] * len(endString) + [x + 1]
+        for y in list(range(len(endString))):
+            if indel:
+                indelcost = 1
+            else:
+                indelcost = 8
+            delcost = oneago[y] - indelcost
+            addcost = thisrow[y - 1] - indelcost
+            subcost = oneago[y - 1] + (startString[x] != endString[y])
+            thisrow[y] = max(delcost, addcost, subcost)
+            print(thisrow)
+    return thisrow[len(endString) - 1]
 
 
 if __name__ == "__main__":
