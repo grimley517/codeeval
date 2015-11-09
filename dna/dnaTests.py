@@ -4,6 +4,7 @@ import dna as d
 import subprocess
 import shutil
 import sys
+from threading import Thread
 
 class TestSequenceFunctions(unittest.TestCase):
 
