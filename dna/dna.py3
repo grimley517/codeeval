@@ -1,5 +1,5 @@
 import sys
-
+from functools import lru_cache
 
 def matchLetter(letterA, letterB):
     return (letterA == letterB)
@@ -19,6 +19,7 @@ def clean(instring):
             answer += letter
     return (answer)
 
+@lru_cache(maxsize=4095)
 def score(startString, endString, scoreint=0, indel=False):
 
     if(len(startString) == 0 and len(endString) == 0):
