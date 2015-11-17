@@ -1,14 +1,16 @@
 import sys
-
+match = 3
+mismatch = -3
+     
 
 def matchLetter(letterA, letterB):
     return (letterA == letterB)
 
 def indelscore(indelstate):
     if indelstate:
-        return 1
+        return -1
     else:
-        return 8
+        return -8
 
 def clean(instring):
     allowed = "ACGT"
@@ -19,18 +21,38 @@ def clean(instring):
             answer += letter
     return (answer)
 
-def score(startString, endString, indel=False):
-    oneago = []
-    thisrow = list(range(1, len(endString) + 1)) + [0]
-    for x in list(range(len(startString))):
-        twoago, oneago, thisrow = oneago, thisrow, [0] * len(endString) + [x + 1]
-        for y in list(range(len(endString))):
-            delcost = oneago[y] - 3
-            addcost = thisrow[y - 1] - 3
-            subcost = oneago[y - 1] + (startString[x] != endString[y])
-            thisrow[y] = min(delcost, addcost, subcost)
-            print(thisrow)
-    return thisrow[len(seq2) - 1]
+def missmatch (cell):
+    score = cell[0] +mismatch
+    return(score)
+
+def indel(cell):
+    ongoing = cell[1]
+    score = cell[0] + indelscore(cell[1])
+    return(score)
+
+def calcCell(up, left, diag):
+     maxindel = max(indel(up),indel(left))
+     mmatch = missmatch(diag)
+     if mmatch > maxindel:
+         return([mmatch,False])
+     else:
+        return([maxindel,True])
+     
+
+def score(startString, endString):
+    grid = [0,0]+list(startString)
+    grid[0] = [0]+list(endString)
+    grid[1][1] = [0, False]
+    for i in range(1,len(grid)):
+        for j in range(1,len(grid[0])):
+              A = grid[j]
+              B = grid[0][i]
+              if (matchletter(A,B)):
+                  grid[j][i]=[grid[j-1][i-1] + match, False]
+              else:
+                  grid[j][i] = calcCell(grid[j-1][i], grid[j][i-1], grid[j-1][i-1])
+    return (grid[-1][-1])
+                              
 
 
 if __name__ == "__main__":

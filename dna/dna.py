@@ -1,14 +1,17 @@
 import sys
-
-
+match = 3
+mismatch = -3
+grid = [[]]
+     
+'''https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm'''
 def matchLetter(letterA, letterB):
     return (letterA == letterB)
 
 def indelscore(indelstate):
     if indelstate:
-        return 1
+        return -1
     else:
-        return 8
+        return -8
 
 def clean(instring):
     allowed = "ACGT"
@@ -19,22 +22,37 @@ def clean(instring):
             answer += letter
     return (answer)
 
-def score(startString, endString, indel=False):
-    oneago = []
-    thisrow = list(range(1, len(endString) + 1)) + [0]
-    for x in list(range(len(startString))):
-        twoago, oneago, thisrow = oneago, thisrow, [0] * len(endString) + [x + 1]
-        for y in list(range(len(endString))):
-            if indel:
-                indelcost = 1
+def missmatch (cell):
+    score = cell[0] +mismatch
+    return(score)
+
+def indel(cell):
+    ongoing = cell[1]
+    score = cell[0] + indelscore(cell[1])
+    return(score)
+
+def calcCell(up, left, diag):
+     maxindel = max(indel(up),indel(left))
+     mmatch = missmatch(diag)
+     if mmatch > maxindel:
+         return([mmatch,False])
+     else:
+        return([maxindel,True])
+     
+
+def score(startString, endString):
+    grid = [[0]]
+    for letter in startString:
+        grid.append([grid[-1][0]+missmatch])
+    for letter in endString:
+        grid[0].append(grid[0][-1]+missmatch)
+    for y in range(1,len(grid[0]-1)):
+        for x in range(1,len(grid)-1):
+            if (startString[x-1] == endString[y-1]):
+                grid[x][y] = grid[x-1][y-1]+match
             else:
-                indelcost = 8
-            delcost = oneago[y] - indelcost
-            addcost = thisrow[y - 1] - indelcost
-            subcost = oneago[y - 1] + (startString[x] != endString[y])
-            thisrow[y] = max(delcost, addcost, subcost)
-            print(thisrow)
-    return thisrow[len(endString) - 1]
+                calcCell
+                              
 
 
 if __name__ == "__main__":
